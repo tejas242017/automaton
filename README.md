@@ -10,10 +10,11 @@ A modular AI operations workbench combining ideas from agent runtimes, hierarchi
 | Default-deny tool policy + exact-host allowlist | Implemented in `src/superproject/policy.ts` |
 | Human approval gate and audit trail | Implemented in the starter workflow |
 | Deterministic no-key demo + tests | Added; run locally to verify |
+| OpenAI-compatible cloud text adapter | Implemented; requires operator-supplied API key/model |
 | Upsonic, RA.Aid, MCP, API Anything, AnythingMCP, Newspack adapters | Planned; not yet connected |
 | Automatic public publishing, shell execution, payments, self-replication | Not enabled in this core |
 
-**Important:** the current demo is simulated. This repository does not claim that all upstream projects have been merged, that external integrations are live, or that the system can generate revenue automatically. Integrations should be added as isolated adapters, checked against their licenses, pinned and tested individually.
+**Important:** the mock demo is simulated. The optional live provider adapter makes text-completion calls only; it does not grant a model shell, browser, publishing, GitHub-write, or payment tools. This repository does not claim that all upstream projects have been merged or that the system can generate revenue automatically. Integrations should be added as isolated adapters, checked against their licenses, pinned and tested individually.
 
 ## Superproject docs
 
@@ -26,7 +27,7 @@ A modular AI operations workbench combining ideas from agent runtimes, hierarchi
 
 `UI/CLI → Orchestrator → Specialist agents → Policy/approval gateway → Tool/MCP adapters → Providers/CMS`
 
-Initial design is cloud-provider-friendly and has no requirement for a heavyweight local language model. The deterministic demo runs without API keys. Real model calls and upstream connectors remain separate implementation milestones.
+Initial design is cloud-provider-friendly and has no requirement for a heavyweight local language model. The mock demo runs without API keys. Live model calls require a configured provider; upstream repository adapters remain separate implementation milestones.
 
 ---
 

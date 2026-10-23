@@ -1,12 +1,13 @@
 # Superproject Core — Quick Start
 
-The first increment adds a provider-neutral workflow foundation and policy gate to the existing TypeScript project. It is intentionally not an automatic merge of upstream repositories. External frameworks and publishing platforms remain adapters.
+This increment adds a provider-neutral task workflow, a conservative tool policy gate, and an optional OpenAI Chat Completions-compatible text provider. It does not vendor the upstream codebases into one executable. External agent runtimes, coding workers, MCP gateways, API adapters and the Newspack CMS remain separate integration milestones.
 
 ## Requirements
 
 - Node.js 20 or newer
 - pnpm 10 (repository package manager)
-- No local model, API key, cloud account, or paid service required for the demo
+- No local language model required
+- A provider API key only for live model calls; model/API usage may incur charges
 
 ## Install and verify
 
@@ -18,28 +19,65 @@ pnpm run typecheck
 pnpm test
 ```
 
-## Run the deterministic demo
+## Run the no-key mock demo
 
 ```bash
-pnpm exec tsx -e "import { runSuperprojectDemo } from './src/superproject/demo.ts'; console.log(JSON.stringify(await runSuperprojectDemo('Draft a research brief'), null, 2))"
+pnpm exec tsx scripts/superproject-demo.ts --mock Draft a research brief
 ```
 
-The first run completes research and planning, then pauses before implementation because the task requires approval. To test the full simulated path, call:
+The mock runner completes the research and planning stages, then pauses before implementation. To test the complete simulated path:
 
 ```bash
-pnpm exec tsx -e "import { runSuperprojectDemo } from './src/superproject/demo.ts'; console.log(JSON.stringify(await runSuperprojectDemo('Draft a research brief', true), null, 2))"
+pnpm exec tsx scripts/superproject-demo.ts --mock --approve-implementation Draft a research brief
 ```
 
-This demo uses a deterministic mock executor. It does not call a live model, publish content, access GitHub, execute a shell command, or spend money.
+This mode makes no model calls and does not access the network, execute code, publish content, or spend money.
 
-## What's implemented in this increment
+## Configure a live text provider
 
-- A typed task/role model for a small bounded workflow.
-- Topological dependency validation, cycle/unknown-dependency checks, and a configurable task limit.
-- A policy gate that denies unknown/disabled tools by default, applies exact-host network allowlists, and requires explicit approval for mutating/external/financial/execution tools.
-- Audit events for workflow steps and approval pauses.
-- Tests for the above behavior.
+Set the environment variables in the same terminal where you will run the command. Do not put API keys in source files or commit them to Git.
+
+**PowerShell (Windows):**
+
+```powershell
+$env:SUPERPROJECT_API_KEY = "YOUR_PROVIDER_API_KEY"
+$env:SUPERPROJECT_MODEL = "YOUR_MODEL_NAME"
+# Optional: set this only for an OpenAI-compatible endpoint.
+$env:SUPERPROJECT_BASE_URL = "https://YOUR_PROVIDER_OPENAI_COMPATIBLE_ENDPOINT/"
+pnpm exec tsx scripts/superproject-demo.ts Draft a research brief
+```
+
+**Bash:**
+
+```bash
+export SUPERPROJECT_API_KEY="YOUR_PROVIDER_API_KEY"
+export SUPERPROJECT_MODEL="YOUR_MODEL_NAME"
+# Optional:
+export SUPERPROJECT_BASE_URL="https://YOUR_PROVIDER_OPENAI_COMPATIBLE_ENDPOINT/"
+pnpm exec tsx scripts/superproject-demo.ts Draft a research brief
+```
+
+The provider defaults to the OpenAI SDK endpoint when `SUPERPROJECT_BASE_URL` is omitted. The selected endpoint must implement the OpenAI Chat Completions-compatible API. This adapter is text-only, does not expose model tool calls, uses a bounded timeout, and disables automatic SDK retries.
+
+By default the live workflow performs two text completions (research and planning), then returns `needs_approval`. To also generate the implementation proposal, explicitly pass `--approve-implementation`:
+
+```powershell
+pnpm exec tsx scripts/superproject-demo.ts --approve-implementation Draft a research brief
+```
+
+This approval only permits the model to generate the implementation text; it does **not** run generated code or approve any real-world action.
+
+## What's implemented
+
+- Typed role/task model and dependency graph.
+- Unknown/disabled tools denied by default.
+- Exact-host allowlists for tool URL arguments.
+- Approval requirement for mutating, external, financial and execution tools.
+- Cycle/unknown dependency/task-limit checks.
+- Audit events for task starts, completions, failures, blocked tasks and approval waits.
+- OpenAI-compatible text provider interface and role-specific prompts.
+- Deterministic mock execution and unit tests.
 
 ## Not implemented yet
 
-The Upsonic, RA.Aid, MCP, API Anything, AnythingMCP and Newspack integrations are still planned adapters. A working integration requires connector code, configuration, least-privilege credentials where relevant, and integration tests. No claim is made that those upstream systems have been merged or that this core is production-ready.
+Upsonic, RA.Aid, MCP, API Anything, AnythingMCP, GitHub, and Newspack are not yet connected as live adapters. This code does not execute shells, directly modify files, publish posts, browse the web, make payments, create wallets, or self-replicate. Add each integration in an isolated adapter with least-privilege credentials and integration tests before enabling it.
