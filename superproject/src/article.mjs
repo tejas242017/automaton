@@ -23,7 +23,7 @@ export function createDraft({ topic, sources, generatedAt = new Date().toISOStri
     "",
     "## Editorial summary",
     "",
-    "This draft organizes the selected sources for a writer to review. The feed descriptions below are source-provided snippets; they have not been independently verified by this prototype.",
+    "This draft organizes retrieved content and source notes for editorial review. Claims have not been independently verified by this prototype.",
     "",
     "## Source notes",
     "",
@@ -64,6 +64,8 @@ export function createRunReport({ runId, startedAt, finishedAt, inputPath, sourc
     sourceIds: sources.map((source) => source.id),
     outputPath,
     published: false,
-    warnings: ["Fixture/template mode was used; no source was fetched from the internet and no model was called."],
+    warnings: mode === "fixture"
+      ? ["Fixture/template mode was used; no source was fetched from the internet and no model was called."]
+      : ["Retrieved text is not independently fact-checked; no model was called and human source review is required."],
   };
 }
