@@ -1,0 +1,40 @@
+name: Superproject CI
+on:
+  push:
+    branches: [main]
+    paths:
+      - "superproject/**"
+      - ".github/workflows/superproject-ci.yml"
+  pull_request:
+    paths:
+      - "superproject/**"
+      - ".github/workflows/superproject-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: superproject
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate syntax
+        run: |
+          node --check src/rss.mjs
+          node --check src/article.mjs
+          node --check src/pipeline.mjs
+          node --check src/cli.mjs
+      - name: Run tests
+        run: npm test
+      - name: Run fixture demo
+        run: npm run demo -- "Automaton free-first pipeline smoke test"
+      - name: Confirm demo generated output
+        run: test -n "$(find output -maxdepth 1 -name '*-draft.md' -print -quit)"
