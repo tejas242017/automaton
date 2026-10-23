@@ -22,13 +22,16 @@ test("AI pipeline uses injected provider and keeps fixture flow free of network"
         },
       },
     });
-    assert.equal(calls, 1);
+    assert.equal(calls, 2);
     assert.equal(result.mode, "fixture+gemini");
     assert.equal(result.published, false);
     const draft = await readFile(result.draftPath, "utf8");
     const report = JSON.parse(await readFile(result.reportPath, "utf8"));
     assert.match(draft, /Generated text using supplied source notes/);
     assert.equal(report.mode, "fixture+gemini");
+    assert.equal(report.model, "test-model");
+    assert.equal(report.modelRequestsUsed, 2);
+    assert.match(report.warnings.join(" "), /human verification/i);
     assert.equal(report.published, false);
   } finally {
     await rm(outputDir, { recursive: true, force: true });
