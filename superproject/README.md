@@ -14,9 +14,17 @@ npm run demo
 
 The demo consumes a checked-in RSS fixture, normalizes/deduplicates links, creates a Markdown draft and source list, and prints the output location. It uses a transparent template, not an AI model. That distinction is intentional so we can prove the data flow before connecting external providers.
 
+If you have installed Agent Reach separately, you can request a read-only page retrieval:
+
+```powershell
+npm run demo -- --agent-reach https://example.org/ "Explain the main points"
+```
+
+Replace the example URL with a public HTTPS page. Agent Reach must already be installed and configured; Automaton does not install it, bypass logins, or provide API keys. Retrieved text is saved as source material, not treated as verified facts. This command has not yet been tested against a live Agent Reach installation in CI.
+
 ## How the upstream powers fit
 
-- Agent Reach: first planned read-only research adapter.
+- Agent Reach: optional read-only CLI adapter is now implemented; it has automated stub tests, but live installation/platform compatibility is not yet verified.
 - Upsonic: optional Python agent-runtime sidecar after a prototype proves value.
 - OpenAI Agent Swarm: hierarchical supervisor/delegation ideas implemented in the internal workflow.
 - RA.Aid: separate, sandboxed coding worker; not installed or invoked by this prototype.
