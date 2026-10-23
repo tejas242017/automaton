@@ -133,4 +133,4 @@ Never let a model invent or directly elevate tool permissions. Policy is enforce
 
 ## Current status
 
-The existing repository contains a typed workflow runner, a default-deny policy module, a mock demo, a text-only OpenAI-compatible provider adapter and starter tests. These are **starter components**, not proof that the whole superproject works. Verify with CI and end-to-end acceptance tests before calling it operational. The integrations described above remain planned until tested.
+The existing repository contains a typed workflow runner, a default-deny policy module, a mock demo, a text-only OpenAI-compatible provider adapter and starter tests. These are **starter components**, not proof that the whole superproject works. Verify with CI and end-to-end acceptance tests before calling it operational. The integrations described above remain planned.
