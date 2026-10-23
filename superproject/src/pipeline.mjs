@@ -74,6 +74,8 @@ export async function runPipeline({
     sources,
     outputPath: path.relative(process.cwd(), draftPath),
     mode: ai ? `${mode}+gemini` : mode,
+    model: draft.model,
+    modelRequestsUsed: draft.modelRequestsUsed,
   });
   await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n", "utf8");
   return { runId, sourceCount: sources.length, draftPath, sourcesPath, reportPath, published: false, mode: ai ? `${mode}+gemini` : mode };
