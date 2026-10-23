@@ -12,6 +12,8 @@ A modular AI operations workbench combining ideas from agent runtimes, hierarchi
 | Deterministic no-key demo + tests | Added; run locally to verify |
 | OpenAI-compatible cloud text adapter | Implemented; requires operator-supplied API key/model |
 | Upsonic, RA.Aid, MCP, API Anything, AnythingMCP, Newspack adapters | Planned; not yet connected |
+| Agent Reach research adapter | Planned; not yet connected |
+| Edge0 local inference adapter | Planned; compatibility not yet validated on Windows/GPU |
 | Automatic public publishing, shell execution, payments, self-replication | Not enabled in this core |
 
 **Important:** the mock demo is simulated. The optional live provider adapter makes text-completion calls only; it does not grant a model shell, browser, publishing, GitHub-write, or payment tools. This repository does not claim that all upstream projects have been merged or that the system can generate revenue automatically. Integrations should be added as isolated adapters, checked against their licenses, pinned and tested individually.
@@ -20,6 +22,7 @@ A modular AI operations workbench combining ideas from agent runtimes, hierarchi
 
 - [Integration blueprint](SUPERPROJECT_PLAN.md)
 - [Upstream capability matrix](INTEGRATION_MATRIX.md)
+- [Full integration blueprint including Edge0 and Agent Reach](SUPERPROJECT_PLAN.md)
 - [Implementation roadmap](docs/SUPERPROJECT_ROADMAP.md)
 - [Quick start and demo](docs/SUPERPROJECT_QUICKSTART.md)
 
