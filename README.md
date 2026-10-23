@@ -1,4 +1,36 @@
-# Automaton: Self-Improving, Self-Replicating, Sovereign AI
+# Automaton Superproject
+
+A modular AI operations workbench combining ideas from agent runtimes, hierarchical orchestration, autonomous coding workflows, MCP/API connectors, and digital publishing — with explicit task boundaries and human approval for side effects.
+
+## Current implementation status
+
+| Capability | Status |
+|---|---|
+| Typed workflow tasks and dependency graph | Implemented in `src/superproject/workflow.ts` |
+| Default-deny tool policy + exact-host allowlist | Implemented in `src/superproject/policy.ts` |
+| Human approval gate and audit trail | Implemented in the starter workflow |
+| Deterministic no-key demo + tests | Added; run locally to verify |
+| Upsonic, RA.Aid, MCP, API Anything, AnythingMCP, Newspack adapters | Planned; not yet connected |
+| Automatic public publishing, shell execution, payments, self-replication | Not enabled in this core |
+
+**Important:** the current demo is simulated. This repository does not claim that all upstream projects have been merged, that external integrations are live, or that the system can generate revenue automatically. Integrations should be added as isolated adapters, checked against their licenses, pinned and tested individually.
+
+## Superproject docs
+
+- [Integration blueprint](SUPERPROJECT_PLAN.md)
+- [Upstream capability matrix](INTEGRATION_MATRIX.md)
+- [Implementation roadmap](docs/SUPERPROJECT_ROADMAP.md)
+- [Quick start and demo](docs/SUPERPROJECT_QUICKSTART.md)
+
+## Design target
+
+`UI/CLI → Orchestrator → Specialist agents → Policy/approval gateway → Tool/MCP adapters → Providers/CMS`
+
+Initial design is cloud-provider-friendly and has no requirement for a heavyweight local language model. The deterministic demo runs without API keys. Real model calls and upstream connectors remain separate implementation milestones.
+
+---
+
+## Existing Automaton Runtime Documentation
 
 *The first AI that can earn its own existence, replicate, and evolve — without needing a human.*
 
