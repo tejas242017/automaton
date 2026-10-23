@@ -47,3 +47,27 @@ The initial design deliberately uses adapters and references rather than copying
 - **Newspack Platform:** a root `LICENSE` was not found at the checked `master` path. Do not redistribute its code until the applicable license is confirmed from upstream maintainers or source-level notices.
 
 These checks are a practical first pass, not legal advice. Licenses can change; re-check the exact commit/tag before vendoring, copying, or distributing upstream code.
+
+
+## Newly added upstreams (checked 2026-10-24)
+
+| Project | What it contributes | Fit in the Superproject | Constraint / integration approach |
+|---|---|---|---|
+| [Edge0](https://github.com/Edge0-AI/Edge0) | Streaming sparse-MoE inference, SSD expert offload, trained routing prediction and Recover-LoRA; platform-specific engines including Windows | Optional local inference backend behind the existing `TextModelProvider` interface, after an API-compatible service is available and tested | The Python/MLX reference implementation is Apple-Silicon-specific; the Windows runtime is separate. Don't assume the MLX stack runs on this Windows PC or that Edge0 fits a 4 GB GPU. Downloaded model artifacts need a separate size/license review. Upstream README declares Apache-2.0. |
+| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | CLI-based web/platform research and structured content retrieval across web, GitHub, YouTube, Bilibili, V2EX and optional login-gated platforms | Optional `ResearchProvider` / CLI adapter that supplies source-backed outputs to researcher and fact-checker roles | Keep use read-only by default; platform sessions, cookies, provider keys, rate limits and service terms matter. Its README warns to install from the project GitHub release rather than a similarly named PyPI package. Upstream declares MIT. |
+
+### Priority recommendation
+
+1. Agent Reach is the closer near-term fit for the research/content-magazine workflow, because it exposes existing internet-reading channels through a CLI. Integrate it as an optional subprocess/JSON adapter with command allowlisting, timeouts, output caps, and source URL preservation. Do not allow the model to construct arbitrary shell commands.
+2. Edge0 is a later optional model backend experiment. Target a loopback OpenAI-compatible endpoint so the orchestration runtime does not depend directly on Edge0 internals. Validate supported OS/backend, actual memory use, output quality and API compatibility before advertising it as available.
+3. Neither integration is wired into the runtime as of this commit; these are design targets, not claims of a working connection.
+
+Sources checked:
+- https://raw.githubusercontent.com/Edge0-AI/Edge0/main/README.md
+- https://raw.githubusercontent.com/Edge0-AI/Edge0/main/python/README.md
+- https://raw.githubusercontent.com/Edge0-AI/Edge0/main/LICENSE
+- https://raw.githubusercontent.com/Edge0-AI/Edge0/main/python/pyproject.toml
+- https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/README_en.md
+- https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/install.md
+- https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/LICENSE
+- https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/pyproject.toml
