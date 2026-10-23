@@ -20,11 +20,32 @@ If you have installed Agent Reach separately, you can request a read-only page r
 npm run demo -- --agent-reach https://example.org/ "Explain the main points"
 ```
 
-Replace the example URL with a public HTTPS page. Agent Reach must already be installed and configured; Automaton does not install it, bypass logins, or provide API keys. Retrieved text is saved as source material, not treated as verified facts. This command has not yet been tested against a live Agent Reach installation in CI.
+Replace the example URL with a public HTTPS page. Agent Reach must already be installed and configured; Automaton does not install it, bypass logins, or provide API keys. Retrieved text is saved as source material, not treated as verified facts. The adapter is covered by mocked tests; a live Agent Reach installation has not yet been exercised.
+
+### Optional AI-written article
+
+The pipeline now supports an explicitly requested Gemini API call. The normal demo still needs no key and makes no network requests.
+
+```powershell
+$env:GEMINI_API_KEY = "YOUR_FREE_TIER_API_KEY"
+$env:GEMINI_MODEL = "gemini-3.1-flash-lite"
+npm run demo -- --ai "Explain the main findings from the selected sources"
+```
+
+For an Agent Reach page and AI draft together:
+
+```powershell
+npm run demo -- --agent-reach https://example.org/ --ai "Explain the main points"
+```
+
+Get a key at [Google AI Studio](https://aistudio.google.com/). The current [Gemini API pricing page](https://ai.google.dev/gemini-api/docs/pricing) lists a free tier for certain models including `gemini-3.1-flash-lite`, but quotas can change and the free tier may use submitted content to improve Google products. Use only content you are comfortable sending to that service.
+
+**Zero-cost caveat:** code can cap requests and refuse fallbacks, but it cannot guarantee that your Google project is configured for free-tier billing. Keep billing disabled / use a free-tier project; do not enable paid billing if ₹0 is a hard requirement. On quota or HTTP errors, the workflow stops without retrying or switching to another provider.
 
 ## How the upstream powers fit
 
-- Agent Reach: optional read-only CLI adapter is now implemented; it has automated stub tests, but live installation/platform compatibility is not yet verified.
+- Agent Reach: optional read-only CLI adapter is implemented and covered with stub tests; live installation/platform compatibility is not yet verified.
+- Gemini: optional text provider and AI-draft path implemented with fixed endpoint, per-run call cap and no fallback; API behavior is tested with mocked HTTP responses, not with a live API key.
 - Upsonic: optional Python agent-runtime sidecar after a prototype proves value.
 - OpenAI Agent Swarm: hierarchical supervisor/delegation ideas implemented in the internal workflow.
 - RA.Aid: separate, sandboxed coding worker; not installed or invoked by this prototype.
