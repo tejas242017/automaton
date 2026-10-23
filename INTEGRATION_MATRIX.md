@@ -56,3 +56,14 @@ The isolated `superproject/` prototype now has a zero-dependency RSS-fixture-to-
 Current measured check: the initial standalone fixture pipeline passed 5 Node tests in GitHub Actions. The expanded Agent Reach adapter tests were committed after that run and are pending a new Actions result. Do not call the expanded integration verified until that run finishes successfully.
 
 Next integrations, in order: (1) a provider-neutral article writer interface with an explicit per-run quota limit, (2) an Upsonic proof-of-concept as a separate optional worker, (3) RA.Aid in a disposable workspace with reviewed diffs, (4) API Anything or AnythingMCP only for a concrete use case. No additional frameworks should be installed just to increase the count of agents.
+
+
+## Update — free-first AI article draft path
+
+The standalone `superproject/` now includes `src/gemini.mjs`, an optional Gemini API adapter that uses Google's documented OpenAI-compatible endpoint. It is opt-in (`--ai`), has a fixed endpoint, a maximum of 2 model calls per process, a 22,000-character input cap, 1,800-token output cap, one bounded timeout and no retries or paid-provider fallback. Automated tests inject a fake `fetch`; CI does not call Google or need an API key.
+
+The pipeline can combine `--agent-reach <HTTPS URL>` with `--ai` to create an AI-assisted Markdown draft from the recorded source text and URLs. Publishing remains off. Only the adapter protocol and output path are verified by tests; no live Gemini key or live Agent Reach CLI has been tested in CI.
+
+Google currently documents a free tier for some Gemini models and publishes model-specific limits at https://ai.google.dev/gemini-api/docs/pricing. Quotas and terms can change. A code-level request cap is not a billing guarantee: the project/key's tier is configured outside this app. For a hard zero-cost constraint, do not enable paid billing, don't use a billed project key, and don't add paid fallback providers. Be aware Google states that free-tier content may be used to improve its products.
+
+Current CI baseline before the Gemini additions: 12 tests passed. New Gemini and AI-draft tests have been added after that baseline and require a new Actions run before those additions are considered verified.
