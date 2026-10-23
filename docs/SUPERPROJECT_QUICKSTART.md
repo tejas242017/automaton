@@ -1,83 +1,49 @@
-# Superproject Core — Quick Start
+# Automaton Superproject — Quick Start
 
-This increment adds a provider-neutral task workflow, a conservative tool policy gate, and an optional OpenAI Chat Completions-compatible text provider. It does not vendor the upstream codebases into one executable. External agent runtimes, coding workers, MCP gateways, API adapters and the Newspack CMS remain separate integration milestones.
+## What this repo currently is
 
-## Requirements
+This is the start of a modular superproject, not a bundle of all upstream repositories. The existing core has typed tasks/dependencies, approval status, a default-deny policy, a deterministic mock demo and a text-only OpenAI-compatible provider adapter. External integrations are not connected yet.
 
-- Node.js 20 or newer
-- pnpm 10 (repository package manager)
-- No local language model required
-- A provider API key only for live model calls; model/API usage may incur charges
+## Free test path
 
-## Install and verify
-
-From a clean checkout:
+Requirements: Node.js 20+, pnpm 10.
 
 ```bash
 pnpm install --frozen-lockfile
 pnpm run typecheck
 pnpm test
-```
-
-## Run the no-key mock demo
-
-```bash
 pnpm exec tsx scripts/superproject-demo.ts --mock Draft a research brief
 ```
 
-The mock runner completes the research and planning stages, then pauses before implementation. To test the complete simulated path:
+The mock demo requires no API key and should not make model calls. If any command fails, fix that before adding integrations. CI results should be checked in the Actions tab before calling this verified.
 
-```bash
-pnpm exec tsx scripts/superproject-demo.ts --mock --approve-implementation Draft a research brief
-```
+## Optional live text provider
 
-This mode makes no model calls and does not access the network, execute code, publish content, or spend money.
+Live provider access is **not guaranteed to be free**. Configure only an endpoint/model whose current pricing and quota you have checked.
 
-## Configure a live text provider
-
-Set the environment variables in the same terminal where you will run the command. Do not put API keys in source files or commit them to Git.
-
-**PowerShell (Windows):**
-
+PowerShell:
 ```powershell
-$env:SUPERPROJECT_API_KEY = "YOUR_PROVIDER_API_KEY"
-$env:SUPERPROJECT_MODEL = "YOUR_MODEL_NAME"
-# Optional: set this only for an OpenAI-compatible endpoint.
-$env:SUPERPROJECT_BASE_URL = "https://YOUR_PROVIDER_OPENAI_COMPATIBLE_ENDPOINT/"
+$env:SUPERPROJECT_API_KEY = "YOUR_KEY"
+$env:SUPERPROJECT_MODEL = "YOUR_MODEL"
+# Only for a compatible non-default endpoint:
+$env:SUPERPROJECT_BASE_URL = "https://YOUR_COMPATIBLE_ENDPOINT/"
 pnpm exec tsx scripts/superproject-demo.ts Draft a research brief
 ```
 
-**Bash:**
+Never hardcode the key or commit it. The live adapter is text-only: it cannot browse, execute shell commands, publish content, or access GitHub by itself.
 
-```bash
-export SUPERPROJECT_API_KEY="YOUR_PROVIDER_API_KEY"
-export SUPERPROJECT_MODEL="YOUR_MODEL_NAME"
-# Optional:
-export SUPERPROJECT_BASE_URL="https://YOUR_PROVIDER_OPENAI_COMPATIBLE_ENDPOINT/"
-pnpm exec tsx scripts/superproject-demo.ts Draft a research brief
-```
+## Integrations
 
-The provider defaults to the OpenAI SDK endpoint when `SUPERPROJECT_BASE_URL` is omitted. The selected endpoint must implement the OpenAI Chat Completions-compatible API. This adapter is text-only, does not expose model tool calls, uses a bounded timeout, and disables automatic SDK retries.
+Read `SUPERPROJECT_PLAN.md` and `INTEGRATION_MATRIX.md` before enabling upstream tools. Planned does not mean integrated. Agent Reach should be the first research adapter. Coding tools require an isolated checkout, no secrets, timeouts and human review of diffs. AnythingMCP and Heretic are AGPL-3.0 projects; do not vendor their source without reviewing obligations. Newspack's applicable root license could not be confirmed in the current check, so do not redistribute its code.
 
-By default the live workflow performs two text completions (research and planning), then returns `needs_approval`. To also generate the implementation proposal, explicitly pass `--approve-implementation`:
+## First end-to-end target
 
-```powershell
-pnpm exec tsx scripts/superproject-demo.ts --approve-implementation Draft a research brief
-```
+Input topic/RSS fixture → deduplicated sources → article draft → fact/source checklist → saved Markdown and JSON run log → approval state. The first run must be possible without credentials from fixture data. A live model path comes later, subject to free quota. Public publishing is out of scope until explicit approval and CMS tests exist.
 
-This approval only permits the model to generate the implementation text; it does **not** run generated code or approve any real-world action.
+## Free-first operating principles
 
-## What's implemented
-
-- Typed role/task model and dependency graph.
-- Unknown/disabled tools denied by default.
-- Exact-host allowlists for tool URL arguments.
-- Approval requirement for mutating, external, financial and execution tools.
-- Cycle/unknown dependency/task-limit checks.
-- Audit events for task starts, completions, failures, blocked tasks and approval waits.
-- OpenAI-compatible text provider interface and role-specific prompts.
-- Deterministic mock execution and unit tests.
-
-## Not implemented yet
-
-Upsonic, RA.Aid, MCP, API Anything, AnythingMCP, GitHub, and Newspack are not yet connected as live adapters. This code does not execute shells, directly modify files, publish posts, browse the web, make payments, create wallets, or self-replicate. Add each integration in an isolated adapter with least-privilege credentials and integration tests before enabling it.
+- No paid fallback by default.
+- No API key or quota: queue/skip model tasks and explain why.
+- Store outputs intentionally; GitHub Actions runners are temporary.
+- Cron is best-effort, not exact-minute scheduling.
+- Never claim a real source was checked when running a fixture/mock path.
