@@ -52,7 +52,7 @@ export function createDraft({ topic, sources, generatedAt = new Date().toISOStri
   return { title: headline, generatedAt, sources: sourceRows, markdown: body, status: "draft" };
 }
 
-export function createRunReport({ runId, startedAt, finishedAt, inputPath, sources, outputPath, mode = "fixture" }) {
+export function createRunReport({ runId, startedAt, finishedAt, inputPath, sources, outputPath, mode = "fixture", model, modelRequestsUsed }) {
   return {
     schemaVersion: 1,
     runId,
@@ -64,9 +64,13 @@ export function createRunReport({ runId, startedAt, finishedAt, inputPath, sourc
     sourceIds: sources.map((source) => source.id),
     outputPath,
     published: false,
-    warnings: mode === "fixture"
-      ? ["Fixture/template mode was used; no source was fetched from the internet and no model was called."]
-      : ["Retrieved text is not independently fact-checked; no model was called and human source review is required."],
+    ...(model ? { model } : {}),
+    ...(Number.isInteger(modelRequestsUsed) ? { modelRequestsUsed } : {}),
+    warnings: mode.includes("+gemini")
+      ? ["AI-assisted writer and editor/critic stages ran; sources and material claims still require human verification."]
+      : mode === "fixture"
+        ? ["Fixture/template mode was used; no source was fetched from the internet and no model was called."]
+        : ["Retrieved text is not independently fact-checked; no model was called and human source review is required."],
   };
 }
 
