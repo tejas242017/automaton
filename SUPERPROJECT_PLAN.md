@@ -20,6 +20,8 @@ Reuse interfaces and proven ideas; integrate dependencies only when their licens
 | AnythingMCP | Bridge REST/OpenAPI, GraphQL, SOAP, SQL and other services into MCP | Integrate by external MCP endpoint or optional sidecar; do not vendor the full server initially |
 | Newspack Platform | Publisher/CMS, newsletters, memberships, monetization | Editorial/CMS integration via its documented APIs; separate deployment, not embedded in the agent process |
 | Heretic | Model transformation/abliteration research | Isolated opt-in research profile only; not required for runtime, not a security feature, and not part of the default setup |
+| Edge0 | Streaming sparse-MoE local inference with SSD expert offload and LoRA/routing adapters | Optional model backend only through a tested OpenAI-compatible local service; validate OS/backend and model size first |
+| Agent Reach | Web and platform research through a CLI with structured output | Optional research adapter; restrict commands, cap time/output, preserve source links, default to read-only |
 
 ## Target architecture
 
