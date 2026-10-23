@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Superproject Demonstration Feed</title>
+    <item>
+      <title>Example: Open standards for AI tools</title>
+      <link>https://example.org/research/open-standards</link>
+      <guid>https://example.org/research/open-standards</guid>
+      <pubDate>Fri, 23 Oct 2026 08:00:00 GMT</pubDate>
+      <description>A fixture item for testing source tracking and editorial workflows. This is demonstration data, not a real news claim.</description>
+    </item>
+    <item>
+      <title>Duplicate URL fixture</title>
+      <link>https://example.org/research/open-standards?utm_source=fixture</link>
+      <guid>duplicate-open-standards</guid>
+      <pubDate>Fri, 23 Oct 2026 08:05:00 GMT</pubDate>
+      <description>This item intentionally points at the same normalized URL so deduplication can be tested.</description>
+    </item>
+    <item>
+      <title>Example: Measuring editorial quality</title>
+      <link>https://example.org/guides/editorial-quality</link>
+      <guid>https://example.org/guides/editorial-quality</guid>
+      <pubDate>Thu, 22 Oct 2026 08:00:00 GMT</pubDate>
+      <description>A second fixture item used to test a multi-source draft. It is fictional test content.</description>
+    </item>
+  </channel>
+</rss>
