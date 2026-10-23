@@ -51,10 +51,11 @@ export function runAgentReachRead(rawUrl, {
     let timedOut = false;
     let overflow = false;
     let child;
+    let timer;
     const finish = (error, value) => {
       if (settled) return;
       settled = true;
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
       if (error) reject(error); else resolve(value);
     };
 
@@ -69,7 +70,7 @@ export function runAgentReachRead(rawUrl, {
       return;
     }
 
-    const timer = setTimeout(() => {
+    timer = setTimeout(() => {
       timedOut = true;
       child.kill("SIGKILL");
       finish(new Error("Agent Reach timed out; increase the bounded timeout only if needed."));
