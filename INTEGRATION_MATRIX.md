@@ -31,3 +31,19 @@ This matrix is a first-pass design review based on upstream READMEs checked on 2
 - Newspack README: https://raw.githubusercontent.com/OpenProducer/newspack-platform/master/README.md
 - API Anything README: https://raw.githubusercontent.com/goodnight000/api-anything/main/README.md
 - AnythingMCP README: https://raw.githubusercontent.com/HelpCode-ai/anythingmcp/main/README.md
+
+
+## License and redistribution gate (checked 2026-10-24)
+
+The initial design deliberately uses adapters and references rather than copying upstream source trees.
+
+- **Upsonic:** upstream `LICENCE` declares MIT. Preserve the notice if source is ever copied.
+- **RA.Aid:** upstream `LICENSE` declares Apache-2.0. Preserve notices and include required attribution/NOTICE handling if applicable.
+- **OpenAI_Agent_Swarm:** upstream `LICENSE` declares MIT, but the repository is archived; a license grant does not make the code actively maintained.
+- **API Anything:** upstream `LICENSE` declares MIT.
+- **Heretic:** upstream `LICENSE` declares AGPL-3.0. Keep it as an independent opt-in tool/service; do not copy its source into this project without reviewing the copyleft and distribution obligations.
+- **AnythingMCP:** upstream `LICENSE` declares AGPL-3.0. Prefer connecting to it as a separately deployed service; obtain legal review before redistributing a combined/modified work.
+- **awesome-ai-agents:** a root `LICENSE` was not found at the checked `main` path. Treat the catalogue as a discovery source; do not copy its curated text wholesale unless its applicable terms are confirmed.
+- **Newspack Platform:** a root `LICENSE` was not found at the checked `master` path. Do not redistribute its code until the applicable license is confirmed from upstream maintainers or source-level notices.
+
+These checks are a practical first pass, not legal advice. Licenses can change; re-check the exact commit/tag before vendoring, copying, or distributing upstream code.
