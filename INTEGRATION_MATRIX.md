@@ -13,7 +13,7 @@ Checked against public repository metadata and upstream README/license files on 
 | [API Anything](https://github.com/goodnight000/api-anything) | Learns site operations and invokes saved operations through CLI/MCP/TypeScript | Optional connector for explicitly permitted sites | Install as pinned independent tool | Planned. MIT. Protect cookies/tokens; enforce host allowlist and read/write policy. |
 | [AnythingMCP](https://github.com/HelpCode-ai/anythingmcp) | Self-hosted MCP gateway for REST/OpenAPI, SOAP, GraphQL, OData and SQL integrations | Optional external MCP endpoint/sidecar with a narrow allowlist | Do not vendor initially | Planned. AGPL-3.0. Review compliance before any modified/combined distribution. |
 | [Edge0](https://github.com/Edge0-AI/Edge0) | Local sparse-MoE inference system with a Windows build path as well as platform-specific engines | Optional local text model behind TextModelProvider after performance tests | Separate experimental install | Not validated on this PC. Windows build needs C++/Vulkan toolchain, disk, memory and model assets; no guarantee with 4 GB VRAM/limited free RAM. Apache-2.0. |
-| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | Research CLI for multiple public and login-gated web platforms | Read-only ResearchProvider returning source URLs and bounded excerpts | Separate pinned CLI, not copied into the core | Planned. MIT. Login-gated features may need accounts/configuration; platform availability varies. |
+| [Agent Reach](https://github.com/Panniantong/Agent-Reach) | Research CLI for multiple public and login-gated web platforms | Read-only adapter in `superproject/src/agent-reach.mjs` invokes only `agent-reach read <URL>` without a shell; workflow saves retrieved text and source URL | Separate installed CLI, not copied into the core | Adapter and stub tests exist. Live CLI/install/platform not yet verified. MIT. Login-gated features may need accounts/configuration; platform availability varies. |
 
 ## Order of implementation
 
@@ -47,3 +47,12 @@ Every adapter must include:
 - Free AI provider quotas and terms may change; do not assume unlimited access or use a fallback that spends automatically.
 - Public RSS and website access vary; obey source site terms and robots/rate limits.
 - A free demo can pass tests without proving live integrations; only label an adapter "working" after running an actual integration test.
+
+
+## Implementation update — 2026-10-24
+
+The isolated `superproject/` prototype now has a zero-dependency RSS-fixture-to-draft pipeline and an optional Agent Reach CLI adapter. GitHub Actions run `superproject/test/` with stubbed Agent Reach calls; the CI test does not require Agent Reach to be installed or make real requests.
+
+Current measured check: the initial standalone fixture pipeline passed 5 Node tests in GitHub Actions. The expanded Agent Reach adapter tests were committed after that run and are pending a new Actions result. Do not call the expanded integration verified until that run finishes successfully.
+
+Next integrations, in order: (1) a provider-neutral article writer interface with an explicit per-run quota limit, (2) an Upsonic proof-of-concept as a separate optional worker, (3) RA.Aid in a disposable workspace with reviewed diffs, (4) API Anything or AnythingMCP only for a concrete use case. No additional frameworks should be installed just to increase the count of agents.
