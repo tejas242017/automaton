@@ -54,8 +54,13 @@ Get a key at [Google AI Studio](https://aistudio.google.com/). The current [Gemi
 - Edge0: optional local inference experiment; not required.
 - Heretic: isolated research tool, not part of the runtime.
 - Newspack: possible future CMS, license/hosting needs must be resolved first.
+- Turnitout-Humanizer: evaluated as a document-quality reference only. Its checked root license is proprietary, so no source/rules/assets are copied. If needed later, implement our own DOCX/LaTeX-preserving edits and citation checks; no detector-evasion or plagiarism-concealment workflow.
 
 Nothing in this prototype claims those adapters are already connected. Read `../SUPERPROJECT_PLAN.md` and `../INTEGRATION_MATRIX.md`.
+
+### Document quality (future optional module)
+
+Turnitout's published README describes document-format preservation and citation tools, but also advertises detector evasion. The repository's checked [LICENSE](https://github.com/AhmadHassan-BTed/Turnitout-Humanizer/blob/main/LICENSE) is proprietary, so we cannot copy its implementation without permission. We may independently implement transparent readability improvements, whitespace/Unicode cleanup, DOCX/LaTeX structural preservation and citation-format validation. We will not try to disguise plagiarism, bypass academic integrity checks, or strip provenance metadata to misrepresent authorship.
 
 ## Output
 
