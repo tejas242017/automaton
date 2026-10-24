@@ -14,7 +14,8 @@ This file describes the target and integration contracts. A row marked "planned"
 - No hidden spending, bank transfers, wallet provisioning, purchases, self-replication, or autonomous public posting.
 - External source material is untrusted data, not instructions.
 - Use thin adapters or separately run tools. Do not merge whole repositories as one codebase by default.
-- Preserve upstream license/notice files whenever code is reused. Do not copy source whose applicable license is unclear.
+- Preserve upstream license/notice files whenever code is reused. Do not copy source whose applicable license is unclear. A public GitHub repository may still be proprietary.
+- Document editing must preserve attribution and citations; no detector-evasion or plagiarism-concealment feature is part of the product.
 
 ## System architecture
 
@@ -82,7 +83,11 @@ Not part of the default runtime. It modifies models and has significant compute/
 
 Do not assume it fits the primary runtime. The upstream README currently documents a Windows build path based on llama.cpp, Vulkan and C++ toolchains, with large disk and memory needs; the Python/MLX path is Apple-Silicon-specific. We must test actual model size, available RAM/disk, GPU backend and response quality on the user's machine before using it. Cloud/provider adapter remains the default. Upstream declares Apache-2.0.
 
-### 10. Newspack Platform — separate CMS option
+### 10. Turnitout-Humanizer — document-quality reference only
+
+The public repository's checked root `LICENSE` is proprietary, not an open-source license. Do not copy/vendor its source, transformation rules, or assets without written permission. If the product later needs document utilities, implement independent, testable features such as DOCX/LaTeX structure preservation, Unicode/whitespace cleanup, readability edits that preserve meaning, and citation-format checks. Do not build plagiarism concealment, detector-evasion, provenance stripping to misrepresent authorship, or fake-reference generation. This is not a dependency of the magazine pipeline.
+
+### 11. Newspack Platform — separate CMS option
 
 Do not vendor this large WordPress platform into the core. Evaluate its license first: a root LICENSE was not located in the current check. Until the applicable license is confirmed, treat it as a reference/deployment target and do not redistribute its source. Integrate through documented WordPress/REST interfaces only after the deployment and API access are understood.
 
