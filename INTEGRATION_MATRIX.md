@@ -14,6 +14,7 @@ Checked against public repository metadata and upstream README/license files on 
 | [AnythingMCP](https://github.com/HelpCode-ai/anythingmcp) | Self-hosted MCP gateway for REST/OpenAPI, SOAP, GraphQL, OData and SQL integrations | Optional external MCP endpoint/sidecar with a narrow allowlist | Do not vendor initially | Planned. AGPL-3.0. Review compliance before any modified/combined distribution. |
 | [Edge0](https://github.com/Edge0-AI/Edge0) | Local sparse-MoE inference system with a Windows build path as well as platform-specific engines | Optional local text model behind TextModelProvider after performance tests | Separate experimental install | Not validated on this PC. Windows build needs C++/Vulkan toolchain, disk, memory and model assets; no guarantee with 4 GB VRAM/limited free RAM. Apache-2.0. |
 | [Agent Reach](https://github.com/Panniantong/Agent-Reach) | Research CLI for multiple public and login-gated web platforms | Read-only adapter in `superproject/src/agent-reach.mjs` invokes only `agent-reach read <URL>` without a shell; workflow saves retrieved text and source URL | Separate installed CLI, not copied into the core | Adapter and stub tests exist. Live CLI/install/platform not yet verified. MIT. Login-gated features may need accounts/configuration; platform availability varies. |
+| [Turnitout-Humanizer](https://github.com/AhmadHassan-BTed/Turnitout-Humanizer) | Rule-based document/text transformations, DOCX/LaTeX handling, citation/reference utilities; upstream README also promotes plagiarism/AI-detector evasion | **Capability reference only** for legitimate readability editing, format preservation and citation validation. Implement our own independent, transparent document-quality tools if needed. Do not add detector-evasion, plagiarism concealment, provenance/watermark stripping or fake citation behavior. | **No.** The checked `LICENSE` says proprietary; copying, modifying or redistributing source is prohibited without permission. | Evaluated 2026-10-24. No code copied and no runtime integration. Public repository does not mean open-source license. Privacy claims in upstream docs are not independently audited. |
 
 ## Order of implementation
 
@@ -67,3 +68,12 @@ The pipeline can combine `--agent-reach <HTTPS URL>` with `--ai` to create an AI
 Google currently documents a free tier for some Gemini models and publishes model-specific limits at https://ai.google.dev/gemini-api/docs/pricing. Quotas and terms can change. A code-level request cap is not a billing guarantee: the project/key's tier is configured outside this app. For a hard zero-cost constraint, do not enable paid billing, don't use a billed project key, and don't add paid fallback providers. Be aware Google states that free-tier content may be used to improve its products.
 
 Current CI baseline before the Gemini additions: 12 tests passed. New Gemini and AI-draft tests have been added after that baseline and require a new Actions run before those additions are considered verified.
+
+
+## Turnitout-Humanizer decision
+
+The repository is publicly visible, but its checked root `LICENSE` is a proprietary license (copyright 2026 Ahmad Hassan; all rights reserved), not a permissive open-source license. Therefore, do not clone source into our project, vendor its rules/assets, or copy its implementation without written permission.
+
+We can still learn from the *product requirements* and independently implement legitimate document utilities: preserve DOCX/LaTeX structure, clean malformed Unicode/whitespace, improve readability without changing meaning, validate citation syntax, and flag unsupported references. We will not implement a system intended to disguise plagiarism, bypass academic integrity checks, remove provenance markers to misrepresent authorship, or guarantee that content evades detectors. Detector outputs are not reliable proof of authorship either way.
+
+This repository is not needed by the magazine's RSS → research → writer → editor pipeline. Treat it as an optional future document-quality module, separate from editorial publishing.
